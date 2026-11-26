@@ -177,6 +177,12 @@ function PanelEntrevista({ fila, requisitos, jobId, onGuardar, onPerfil }: {
     return () => { vivo = false; if (creada) URL.revokeObjectURL(creada); };
   }, [registro?.videoId]);
 
+  // Candidatos de la demo con una entrevista grabada (columna «Video entrevista»): el video se carga solo la primera vez
+  const videoGrabado = cand?.importedProfile?.records?.[0]?.['Video entrevista'] || '';
+  useEffect(() => {
+    if (!registro && /^[\w.-]+\.(mp4|webm|mov)$/i.test(videoGrabado)) void usarEjemplo(videoGrabado);
+  }, [videoGrabado]);
+
   const vtt = useMemo(() => (e ? URL.createObjectURL(new Blob([subtitulosVtt(e.transcripcion.segmentos)], { type: 'text/vtt' })) : null), [e]);
   useEffect(() => () => { if (vtt) URL.revokeObjectURL(vtt); }, [vtt]);
 

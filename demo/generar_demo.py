@@ -175,6 +175,72 @@ AVISOS = [
     },
 ]
 
+# Aviso con entrevistas en video REALES (personas que dieron su permiso; ver demo/LEEME_DEMO.md). Se procesa DESPUÉS de
+# AVISOS y con sus propios sorteos, para que los postulantes de los otros cinco avisos no cambien.
+AVISO_RRHH = {
+    "aviso_id": "9000000106", "titulo": "Practicante de Recursos Humanos", "publicado_el": "2026-11-18", "n": 40,
+    "area": "Recursos Humanos y Capacitación", "subarea": "Reclutamiento y Selección", "nivel": "Practicante",
+    "sueldo": (1025, 1500),
+    "requisitos": [
+        "Estudiante universitario de Administración, Recursos Humanos, Psicología, Derecho o carreras afines.",
+        "Experiencia de al menos 6 meses en atención al cliente o en trato directo con personas.",
+        "Habilidades de comunicación, empatía y orientación a las personas.",
+        "Manejo de Excel y herramientas de Office a nivel intermedio.",
+        "Proactividad, responsabilidad y capacidad de organización.",
+    ],
+    "funciones": [
+        "Apoyar el reclutamiento: publicar avisos, filtrar postulantes y coordinar entrevistas.",
+        "Acompañar la inducción de los nuevos colaboradores.",
+        "Mantener actualizada la base de datos del personal.",
+    ],
+    "preguntas": {"¿Por qué te interesa trabajar en Recursos Humanos?": [
+        "Me gusta trabajar con personas y ayudarlas a crecer en la empresa.", "Quiero aprender cómo se selecciona al talento.",
+        "Busco mi primera experiencia profesional.", "Por el horario."]},
+    "afines": {
+        "puestos": ["Practicante de Recursos Humanos", "Asistente de Selección", "Auxiliar de Personal", "Practicante de Bienestar",
+                    "Asesor de Atención al Cliente"],
+        "areas": [("Recursos Humanos y Capacitación", "Reclutamiento y Selección"), ("Atención al Cliente, Call Center y Telemarketing", "Atención al Cliente")],
+        "desc": ["Apoyo en la publicación de avisos, filtro de CV y coordinación de entrevistas; reportes en Excel intermedio.",
+                 "Atención al público, orientación a clientes y registro de solicitudes; trato cordial y empático.",
+                 "Actualización de la base de colaboradores, legajos y apoyo en la inducción del personal nuevo."],
+        "estudios": [("Administración y Recursos Humanos", "Recursos Humanos"), ("Psicología", "Psicología"), ("Derecho", "Derecho"),
+                     ("Administración de Empresas", "Adm. de Empresas")],
+        "cursos": ["Excel Intermedio", "Gestión del Talento Humano", "Psicología Organizacional"],
+    },
+}
+
+# Los tres preseleccionados de AVISO_RRHH: nombres FICTICIOS; cada uno lleva el video de una entrevista real
+# (public/demo/entrevistas/), con un CV acorde a lo que esa persona cuenta en su video.
+FIJOS_RRHH = [
+    {"Nombre": "Valeria", "Apellido": "Mendoza Ríos", "Nro. Documento": "70450118", "Género": "femenino", "Edad": "21",
+     "Fecha de nacimiento": "2005-03-14", "Ciudad": "Santiago de Surco", "Idiomas": "Inglés - Intermedio", "Preferencia Salarial": "1300",
+     "Video entrevista": "practicante_rrhh_1.mp4",
+     "estudios": [("Universitario", "Administración y Recursos Humanos", "Recursos Humanos", "En Curso", "Universidad San Ignacio de Loyola", "2023-03-01", ""),
+                  ("Curso", "Excel Intermedio", "Otra", "Graduado", "Cibertec", "2025-01-01", "2025-03-01")],
+     "experiencias": [("Barista y atención al cliente", "Juan Valdez Café", "Atención al Cliente, Call Center y Telemarketing", "Atención al Cliente",
+                       "Atención directa a clientes, manejo de caja y resolución de reclamos con empatía; organización de turnos del equipo.", "2025-04-01", ""),
+                      ("Anfitriona y atención al cliente", "Pizza Hut", "Atención al Cliente, Call Center y Telemarketing", "Atención al Cliente",
+                       "Recepción y orientación de clientes, toma de pedidos y trabajo en equipo en horas punta.", "2023-06-01", "2025-02-01")]},
+    {"Nombre": "Renzo", "Apellido": "Salazar Paredes", "Nro. Documento": "71983345", "Género": "masculino", "Edad": "22",
+     "Fecha de nacimiento": "2004-08-02", "Ciudad": "Barranco", "Idiomas": "Inglés - Intermedio", "Preferencia Salarial": "1200",
+     "Video entrevista": "practicante_rrhh_2.mp4",
+     "estudios": [("Universitario", "Derecho", "Derecho", "En Curso", "Universidad de Ingeniería y Tecnología (UTEC)", "2022-03-01", "")],
+     "experiencias": [("Asistente de atención al ciudadano", "Consultorio Jurídico Universitario", "Recursos Humanos y Capacitación", "Relaciones Laborales",
+                       "Atención y orientación a personas sobre sus derechos laborales, con comunicación clara y empatía; registro y seguimiento "
+                       "de casos en Excel intermedio; organización de la agenda de citas.", "2025-03-01", ""),
+                      ("Asesor de atención al cliente", "Saga Falabella", "Atención al Cliente, Call Center y Telemarketing", "Atención al Cliente",
+                       "Atención directa a clientes en tienda, resolución de reclamos y trabajo en equipo.", "2024-05-01", "2025-01-01")]},
+    {"Nombre": "Sebastián", "Apellido": "Torres Vargas", "Nro. Documento": "72614490", "Género": "masculino", "Edad": "20",
+     "Fecha de nacimiento": "2006-01-20", "Ciudad": "San Miguel", "Idiomas": "Inglés - Avanzado", "Preferencia Salarial": "1500",
+     "Video entrevista": "practicante_rrhh_3.mp4",
+     "estudios": [("Universitario", "Ingeniería de Inteligencia Artificial", "Ingeniería en Sistemas", "En Curso", "Universidad de Ingeniería y Tecnología (UTEC)", "2024-03-01", "")],
+     "experiencias": [("Asistente de investigación", "Laboratorio de IA en Salud", "Tecnología, Sistemas y Telecomunicaciones", "Programación",
+                       "Proyectos de inteligencia artificial aplicados a la detección de cáncer; programación en Python, Java y Go y diseño de prompts; "
+                       "reportes de avance en Excel.", "2025-05-01", ""),
+                      ("Tutor de programación", "Academia Código Joven", "Educación, Docencia e Investigación", "Docencia",
+                       "Clases a grupos de escolares: comunicación con alumnos y padres, paciencia y organización de cada sesión.", "2024-06-01", "2025-03-01")]},
+]
+
 OTROS = {   # experiencia y estudios que no tienen que ver con el aviso (para el ranking bajo)
     "puestos": [("Auxiliar de Almacén", "Abastecimiento y Logística", "Almacén / Depósito / Expedición", "Recepción y despacho de mercadería, control de inventarios."),
                 ("Cajero", "Comercial, Ventas y Negocios", "Ventas", "Atención en caja, cuadre de caja diario y arqueos."),
@@ -357,6 +423,27 @@ def persona(aviso, k, usados):
     return fila
 
 
+def persona_fija(aviso, spec):
+    """Fila del CSV para un preseleccionado de FIJOS_RRHH (mismas columnas que persona())."""
+    fila = {k: v for k, v in spec.items() if k not in ("estudios", "experiencias")}
+    fila.update({
+        "E-Mail": f"{ascii_(spec['Nombre'])}.{ascii_(spec['Apellido'].split()[0])}@example.com",
+        "Tipo Documento": "DNI", "Teléfono celular": f"900000{spec['Nro. Documento'][-3:]}", "Otro teléfono": "",
+        "Estado Civil": "Soltero/a", "Nacionalidad": "Peru", "Dirección": "Dirección de ejemplo", "Lugar de residencia": "Lima",
+        "Fecha Postulación": "2026-11-19",
+    })
+    for i, (puesto, empresa, area, sub, desc, ini, fin) in enumerate(spec["experiencias"], 1):
+        fila.update({f"Exp[{i}] Puesto": puesto, f"Exp[{i}] Empresa": empresa, f"Exp[{i}] Area": area, f"Exp[{i}] SubArea": sub,
+                     f"Exp[{i}] Industria": "Servicios", f"Exp[{i}] Pais": "Peru", f"Exp[{i}] Descripción": desc,
+                     f"Exp[{i}] Fecha Inicio": ini, f"Exp[{i}] Fecha Fin": fin, f"Exp[{i}] Gente a cargo": ""})
+    for i, (nivel, titulo, area, estado, inst, ini, fin) in enumerate(spec["estudios"], 1):
+        fila.update({f"Est[{i}] Nivel": nivel, f"Est[{i}] Titulo": titulo, f"Est[{i}] Area": area, f"Est[{i}] Estado": estado,
+                     f"Est[{i}] Institucion": inst, f"Est[{i}] Pais": "Peru", f"Est[{i}] Fecha Inicio": ini, f"Est[{i}] Fecha Fin": fin})
+    for pregunta, respuestas in aviso["preguntas"].items():
+        fila[pregunta] = respuestas[0]
+    return fila
+
+
 def detalle(a):
     req = "\n".join(a["requisitos"])
     fun = "\n".join(a["funciones"])
@@ -415,7 +502,31 @@ def main():
         ranking.paso_ranking(bd, {"aviso_id": a["aviso_id"]}, forzar=True)
         bd.marcar(a["aviso_id"], ranking_at=ahora)
 
-    backends = {r["backend"] for r in bd.consultar("SELECT DISTINCT backend FROM ranking_embeddings")}
+    # Aviso con entrevistas reales: después de los demás, para no cambiar sus sorteos
+    a = AVISO_RRHH
+    bd.upsert_lista([{"aviso_id": a["aviso_id"], "titulo": a["titulo"], "estado": "Publicado", "publicado_el": a["publicado_el"],
+                      "creado_por": "Equipo CV UP", "visitas": 231, "recibidos": a["n"] + len(FIJOS_RRHH), "no_leidos": 4}],
+                    marcar_ausentes=False)
+    bd.guardar_detalle(a["aviso_id"], detalle(a))
+    filas = [persona(a, k, usados) for k in range(a["n"])] + [persona_fija(a, s) for s in FIJOS_RRHH]
+    for f in filas:
+        f["Fuente"] = portal_de(clave_postulacion(f))
+    nuevos, total = bd.importar_csv(a["aviso_id"], filas)
+    bd.marcar(a["aviso_id"], ultimo_csv_at=ahora, recibidos_al_scrapear=total)
+    log.info("%s: %d postulantes (%d con entrevista real)", a["titulo"], total, len(FIJOS_RRHH))
+    ranking.paso_ranking(bd, {"aviso_id": a["aviso_id"]}, forzar=True)
+    bd.marcar(a["aviso_id"], ranking_at=ahora)
+    preseleccionados = [bd.uno("SELECT id_postulante FROM postulaciones WHERE aviso_id=? AND documento=?",
+                               (a["aviso_id"], s["Nro. Documento"]))["id_postulante"] for s in FIJOS_RRHH]
+    avance = ("insert into public.gth_avance (aviso_id, id_postulante, etapa) values\n"
+              + ",\n".join(f"  ({lit(a['aviso_id'])}, {lit(i)}, 'preseleccionado')" for i in preseleccionados)
+              + "\non conflict (aviso_id, id_postulante) do update set etapa = excluded.etapa;\n")
+    for r in bd.consultar("SELECT p.nombre, p.apellido, r.ranking, r.score FROM postulaciones p JOIN ranking_embeddings r "
+                          "ON r.aviso_id = p.aviso_id AND r.clave = p.clave WHERE p.aviso_id=? AND p.documento IN (?,?,?)",
+                          (a["aviso_id"], *[s["Nro. Documento"] for s in FIJOS_RRHH])):
+        log.info("  preseleccionado: %s %s · CV #%s (%.2f)", r["nombre"], r["apellido"], r["ranking"], float(r["score"]))
+
+    backends ={r["backend"] for r in bd.consultar("SELECT DISTINCT backend FROM ranking_embeddings")}
     log.info("Ranking calculado con: %s", ", ".join(sorted(backends)))
 
     def cabecera(titulo, nota):
@@ -447,6 +558,8 @@ def main():
                                           "fecha_postulacion", "datos_json", "en_ultimo_csv", "primera_vez_at", "actualizado_at"],
                     orden="ORDER BY aviso_id, id_postulante"),
             inserts(bd, "scrape_runs", ["tipo", "aviso_id", "inicio", "fin", "estado", "nuevos", "total", "mensaje"], orden="ORDER BY id"),
+            "-- Los tres preseleccionados del aviso con entrevistas reales (Proceso de selección 2)",
+            avance,
             "commit;", ""]),
         "02b_datos_ranking.sql": cabecera("Datos de la demo 2/4: ranking e5 de cada postulante", "Correr después de 02a.") + "\n".join([
             inserts(bd, "ranking_embeddings", ["aviso_id", "clave", "id_postulante", "criterios_version", "backend", "ranking", "score",
@@ -463,13 +576,34 @@ def main():
             "commit;", ""]),
     }
     # Trayectoria: un archivo por aviso (el detalle de cada análisis es largo y el SQL Editor de Supabase rechaza ~1 MB)
-    for i, a in enumerate(AVISOS, 1):
+    todos = AVISOS + [AVISO_RRHH]
+    for i, a in enumerate(todos, 1):
         archivos[f"02c{i}_datos_trayectoria.sql"] = cabecera(
-            f"Datos de la demo 3/4 (parte {i} de {len(AVISOS)}): trayectoria laboral · {a['titulo']}", "Correr después de 02a.") + "\n".join([
+            f"Datos de la demo 3/4 (parte {i} de {len(todos)}): trayectoria laboral · {a['titulo']}", "Correr después de 02a.") + "\n".join([
             inserts(bd, "gth_trayectoria_analisis", ["id", "aviso_id", "clave", "id_postulante", "huella", "version", "estado",
                                                      "fecha_referencia", "vigente_hasta", "calculado_at", "detalle"],
                     where=f"WHERE aviso_id = '{a['aviso_id']}'", orden="ORDER BY clave"),
             "commit;", ""])
+    # Solo el aviso con entrevistas reales, para agregarlo a una base que ya tiene los otros cinco (los 02 también lo traen)
+    rr = f"WHERE aviso_id = '{AVISO_RRHH['aviso_id']}'"
+    archivos["06_aviso_practicante_rrhh.sql"] = cabecera(
+        f"06 Aviso «{AVISO_RRHH['titulo']}» con tres entrevistas en video reales",
+        "Agrega solo este aviso a una base que ya tiene los demás. Se puede volver a correr: primero lo borra.") + "\n".join([
+        *(f"delete from public.{tabla} {rr};" for tabla in ("gth_acciones", "gth_avance", "ranking_embeddings", "gth_trayectoria_analisis",
+                                                            "postulaciones", "avisos")), "",
+        inserts(bd, "avisos", ["aviso_id", "titulo", "estado", "publicado_el", "creado_por", "visitas", "recibidos", "no_leidos",
+                               "recibidos_al_scrapear", "url_publica", "detalle_json", "detalle_texto", "detalle_at", "ultimo_csv_at",
+                               "ultima_revision_at", "primera_vez_at", "en_ultima_lista", "criterios", "criterios_version", "ranking_at"], where=rr),
+        inserts(bd, "postulaciones", ["aviso_id", "clave", "id_postulante", "documento", "email", "nombre", "apellido",
+                                      "fecha_postulacion", "datos_json", "en_ultimo_csv", "primera_vez_at", "actualizado_at"],
+                where=rr, orden="ORDER BY id_postulante"),
+        inserts(bd, "ranking_embeddings", ["aviso_id", "clave", "id_postulante", "criterios_version", "backend", "ranking", "score",
+                                           "score_bruto", "req_sims", "req_sims_bruto", "req_fragmentos", "explicacion",
+                                           "explicacion_bruta", "calculado_at", "ajustes"], where=rr, orden="ORDER BY ranking"),
+        inserts(bd, "gth_trayectoria_analisis", ["id", "aviso_id", "clave", "id_postulante", "huella", "version", "estado",
+                                                 "fecha_referencia", "vigente_hasta", "calculado_at", "detalle"], where=rr, orden="ORDER BY clave"),
+        avance,
+        "commit;", ""])
     for viejo in SALIDA.parent.glob("02*_datos_*.sql"):
         viejo.unlink()
     for nombre, texto in sorted(archivos.items()):

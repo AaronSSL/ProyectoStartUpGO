@@ -16,6 +16,7 @@ No usa nada de la base real de GTH. El ranking sí es real: lo calculó el mismo
 | `03_usuario_demo.sql` | Da acceso a la cuenta de la demo |
 | `04_fuentes_portales.sql` | Portal de origen de cada postulante (Bumeran, LinkedIn o Computrabajo). Solo si cargaste los `02` antes del 25/11; los nuevos ya lo traen. |
 | `05_permisos.sql` | Permisos de la web. Los proyectos nuevos de Supabase ya no los dan solos. Ya viene incluido en `01`; córrelo si cargaste el `01` antes del 25/11. |
+| `06_aviso_practicante_rrhh.sql` | Aviso «Practicante de Recursos Humanos» con 3 preseleccionados que tienen una **entrevista en video real** (public/demo/entrevistas/practicante_rrhh_*.mp4, personas que dieron su permiso; los nombres en la web son ficticios). Solo si cargaste los `02` antes del 26/11; los nuevos ya lo traen. |
 
 ## 1. Crear el proyecto en Supabase
 1. En [supabase.com](https://supabase.com) → **New project**. Elige la región **South America (São Paulo)** y guarda la contraseña de la base.

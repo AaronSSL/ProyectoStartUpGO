@@ -1,6 +1,6 @@
 -- =============================================================================================
 -- CV UP · Datos de la demo 4/4: diccionario de empresas Tier 1 / Tier 1.5. TODO ES FICTICIO: personas, documentos, correos, teléfonos y avisos.
--- Generado con demo/generar_demo.py el 2026-11-25 (ranking: e5).
+-- Generado con demo/generar_demo.py el 2026-11-26 (ranking: e5).
 -- El mismo diccionario de base que usa el ranking. Se puede correr en cualquier momento.
 -- =============================================================================================
 begin;

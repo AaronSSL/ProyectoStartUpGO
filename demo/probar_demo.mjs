@@ -40,7 +40,7 @@ assert.deepEqual(perfil, { nivel: 'superadmin', activo: true, debe_cambiar_clave
 for (const t of ['v_postulaciones', 'scrape_runs', 'v_base_postulantes', 'cvs', 'solicitudes', 'en_revision'])
   await one(`select 1 from public.${t} limit 1`);   // la web lee todas estas: falla si falta el permiso
 const avisos = await one(`select aviso_id, titulo, criterios_version, jsonb_array_length(criterios) n from public.avisos order by aviso_id`);
-assert.equal(avisos.length, 5, 'cinco avisos visibles');
+assert.equal(avisos.length, 6, 'seis avisos visibles');
 let total = 0;
 for (const a of avisos) {
   const [{ n: post }] = await one(`select count(*)::int n from public.v_postulaciones where aviso_id = $1 and en_ultimo_csv = 1`, [a.aviso_id]);
@@ -74,5 +74,12 @@ await db.exec(sql('04_fuentes_portales.sql'));
 assert.deepEqual(await fuentes(), antes, '04_fuentes_portales.sql coincide con generar_demo.py');
 const porPortal = Object.entries(Object.groupBy(antes, (r) => r.f)).map(([k, v]) => `${k} ${v.length}`).join(', ');
 console.log(`✓ 04_fuentes_portales.sql (${porPortal})`);
+// 06 agrega o rehace solo el aviso con entrevistas reales sin tocar los demás
+const contar = async () => (await db.query(`select (select count(*) from public.postulaciones)::int p, (select count(*) from public.gth_avance where etapa = 'preseleccionado')::int a`)).rows[0];
+const antes06 = await contar();
+await db.exec(sql('06_aviso_practicante_rrhh.sql'));
+assert.deepEqual(await contar(), antes06, '06 se puede volver a correr sin duplicar');
+assert.equal(antes06.a, 3, 'tres preseleccionados con entrevista real');
+console.log('✓ 06_aviso_practicante_rrhh.sql');
 console.log('✓ Reinicio de la demo (volver a correr todos los 02)');
 console.log(`\nTodo bien: ${avisos.length} avisos y ${total} postulantes ficticios.`);
