@@ -1,0 +1,248 @@
+import React, { useMemo, useState } from 'react';
+import { compareJobTitles } from '../../services/jobOrdering.ts';
+import { supabase } from '../../services/supabase.ts';
+import { Button } from '../common/Button.tsx';
+import { IS_STAGE_ONE } from '../../config/edition.ts';
+import { useApp } from '../../context/AppContext.tsx';
+import { usePerfil } from '../../services/permisos.ts';
+import {
+  Briefcase,
+  ChevronDown,
+  Moon,
+  Sun,
+  Laptop,
+  Menu,
+  LogOut,
+} from 'lucide-react';
+import { Badge } from '../common/Badge.tsx';
+
+interface HeaderProps {
+  onToggleMobileNav: () => void;
+  mobileNavOpen: boolean;
+}
+
+export function Header({ onToggleMobileNav, mobileNavOpen }: HeaderProps) {
+  const {
+    appState,
+    activeJob,
+    currentView,
+    setActiveJobPostingId,
+    setCurrentView,
+    setTheme,
+    showToast,
+  } = useApp();
+  const orderedJobs = useMemo(() => [...appState.jobPostings].sort(compareJobTitles), [appState.jobPostings]);
+
+  // Perfil de la cuenta con sesión iniciada; sin Supabase (modo local) se muestra el equipo
+  const perfil = usePerfil();
+  const nombreUsuario = perfil?.nombre?.trim() || perfil?.email?.split('@')[0] || 'Equipo de Selección';
+  const iniciales = perfil
+    ? nombreUsuario.split(/[\s._-]+/).filter(Boolean).slice(0, 2).map((p) => p[0].toUpperCase()).join('')
+    : 'ES';
+
+  const [signingOut, setSigningOut] = useState(false);
+  const signOut = async () => {
+    if (!supabase) return;
+    setSigningOut(true);
+    try {
+      const { error } = await supabase.auth.signOut({ scope: 'local' });
+      if (error) showToast('No se pudo cerrar la sesión. Intenta nuevamente.', 'warning');
+    } catch { showToast('No se pudo cerrar la sesión. Intenta nuevamente.', 'warning'); }
+    finally { setSigningOut(false); }
+  };
+
+  const handleNextTheme = () => {
+    if (appState.theme === 'light') setTheme('dark');
+    else if (appState.theme === 'dark') setTheme('system');
+    else setTheme('light');
+  };
+
+  return (
+    <header
+      style={{
+        height: '64px',
+        flexShrink: 0,
+        backgroundColor: 'var(--header-bg)',
+        backdropFilter: 'blur(12px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(12px) saturate(160%)',
+        borderBottom: '1px solid var(--border-subtle)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 1.25rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        boxShadow: 'var(--shadow-sm)',
+        transition: 'background-color var(--transition-normal), border-color var(--transition-normal)',
+      }}
+    >
+      {/* Lado izquierdo: Botón móvil + Selector de Convocatoria Activa */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flex: 1, minWidth: 0 }}>
+        <button
+          onClick={onToggleMobileNav}
+          className="focus-ring mobile-only"
+          aria-label="Abrir menú de navegación"
+          aria-expanded={mobileNavOpen}
+          aria-haspopup="dialog"
+          style={{
+            background: 'transparent',
+            border: 'none',
+            color: 'var(--text-primary)',
+            cursor: 'pointer',
+            padding: '0.4rem',
+            borderRadius: 'var(--radius-sm)',
+            display: 'none',
+          }}
+        >
+          <Menu size={22} />
+        </button>
+
+        {/* Selector rápido de Puesto Activo */}
+        {/* En Convocatorias el aviso se elige desde su tarjeta («Ver candidatos»): ahí no se muestra el selector */}
+        {IS_STAGE_ONE ? (currentView === 'convocatorias' ? null : (
+          <select
+            aria-label="Convocatoria activa"
+            disabled={!appState.jobPostings.length}
+            value={appState.activeJobPostingId}
+            onChange={(event) => setActiveJobPostingId(event.target.value)}
+            style={{ maxWidth: '520px', width: '100%', minWidth: 0, padding: '0.6rem',
+              color: 'var(--text-primary)', backgroundColor: 'var(--bg-base)',
+              border: '1px solid var(--border-subtle)', borderRadius: 'var(--radius-md)' }}
+          >
+            {!appState.jobPostings.length && <option value="">Sin convocatorias</option>}
+            {orderedJobs.map((job) => (
+              <option key={job.id} value={job.id}>{job.title} · {job.code}</option>
+            ))}
+          </select>
+        )) : (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.6rem',
+            padding: '0.4rem 0.75rem',
+            backgroundColor: 'var(--bg-base)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid var(--border-subtle)',
+            maxWidth: '520px',
+            minWidth: 0,
+            cursor: 'pointer',
+          }}
+          onClick={() => setCurrentView('convocatorias')}
+          title="Cambiar convocatoria activa"
+        >
+          <Briefcase size={17} style={{ color: 'var(--primary-red)', flexShrink: 0 }} />
+          <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <span
+                style={{
+                  fontSize: '0.8125rem',
+                  fontWeight: 600,
+                  color: 'var(--text-primary)',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {activeJob?.title || 'Seleccionar convocatoria'}
+              </span>
+              {activeJob && (
+                <span className="hide-on-mobile"><Badge size="sm" variant="primary">
+                  {activeJob.code}
+                </Badge></span>
+              )}
+            </div>
+            {activeJob && (
+              <span
+                style={{
+                  fontSize: '0.725rem',
+                  color: 'var(--text-muted)',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {activeJob.department} · {activeJob.period}
+              </span>
+            )}
+          </div>
+          <ChevronDown size={14} style={{ color: 'var(--text-muted)', marginLeft: 'auto', flexShrink: 0 }} />
+        </div>
+        )}
+      </div>
+
+      {/* Lado derecho: Selector de Tema + Perfil GTHC (el Asistente GTH vuelve cuando esté configurado) */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Alternador de Tema */}
+        <button
+          onClick={handleNextTheme}
+          className="focus-ring"
+          aria-label="Cambiar tema de apariencia"
+          title={`Tema actual: ${appState.theme}. Clic para cambiar.`}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '38px',
+            height: '38px',
+            backgroundColor: 'var(--bg-base)',
+            border: '1px solid var(--border-subtle)',
+            borderRadius: 'var(--radius-md)',
+            color: 'var(--text-secondary)',
+            cursor: 'pointer',
+            transition: 'background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast)',
+          }}
+        >
+          {appState.theme === 'light' ? (
+            <Sun size={17} style={{ color: '#D97706' }} />
+          ) : appState.theme === 'dark' ? (
+            <Moon size={17} style={{ color: '#A78BFA' }} />
+          ) : (
+            <Laptop size={17} />
+          )}
+        </button>
+
+        {supabase && <Button variant="ghost" size="sm" aria-label="Cerrar sesión" title="Cerrar sesión" disabled={signingOut} onClick={signOut} icon={<LogOut size={17} />} />}
+        {/* Perfil Único GTHC (mandatario Sección 2: Equipo de Selección) */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.65rem',
+            padding: '0.35rem 0.65rem',
+            borderRadius: 'var(--radius-md)',
+            borderLeft: '1px solid var(--border-subtle)',
+          }}
+        >
+          <div
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--primary-red)',
+              color: '#FFFFFF',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 700,
+              fontSize: '0.8125rem',
+              letterSpacing: '0.5px',
+            }}
+          >
+            {iniciales}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column' }} className="hide-on-mobile" title={perfil?.email}>
+            <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)' }}>
+              {nombreUsuario}
+            </span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
+              {perfil ? 'Equipo de Selección' : 'CV UP'}
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+

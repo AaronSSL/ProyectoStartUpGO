@@ -1,0 +1,45 @@
+{
+  "name": "cv-up",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:local": "node scripts/e2e-local.mjs",
+    "test:workflow:sql": "node scripts/test-shared-workflow.mjs",
+    "test:niveles:sql": "node scripts/test-niveles-acceso.mjs",
+    "test:postulaciones:sql": "node scripts/test-postulaciones.mjs",
+    "multitest:grabar": "node scripts/multitest.mjs grabar",
+    "multitest:reproducir": "node scripts/multitest.mjs reproducir",
+    "test:workflow:browser": "playwright test --config=playwright.workflow.config.ts",
+    "test:trayectoria:sql": "node scripts/test-trayectoria.mjs",
+    "test:trayectoria:python": "python -m unittest scraping.test_trayectoria scraping.test_fechas_trayectoria -v",
+    "test:superadmin:sql": "node scripts/test-superadmin-sueldos.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.3",
+    "lucide-react": "^1.16.0",
+    "nodemailer": "^7.0.9",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "read-excel-file": "9.3.10",
+    "write-excel-file": "^4.1.1"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.10",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "22.20.5",
+    "@types/nodemailer": "^7.0.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "fflate": "0.8.2",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.7"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "functions": {
+    "api/chat.ts": {
+      "maxDuration": 60
+    },
+    "api/evaluate.ts": {
+      "maxDuration": 60
+    },
+    "api/correo.ts": {
+      "maxDuration": 60
+    }
+  }
+}

@@ -1,0 +1,53 @@
+.sueldo-indicador { display: inline-flex; align-items: center; gap: .45rem; font-size: .8125rem; font-weight: 600; line-height: 1.4; }
+.sueldo-indicador svg { flex: 0 0 auto; }
+.sueldo-dentro { color: var(--status-verified-text); }
+.sueldo-supera, .sueldo-error { color: var(--status-failed-text); }
+.sueldo-manejable { color: #946200; }
+[data-theme='dark'] .sueldo-manejable { color: #facc15; }
+.sueldo-pendiente { color: var(--text-secondary); }
+.sueldo-panel h3, .criterios-sueldo-form h3 { font-size: 1rem; font-weight: 600; }
+.sueldo-panel { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+.sueldo-importes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin: 0; }
+.sueldo-importes dt, .sueldo-ayuda, .sueldo-diferencia, .sueldo-importes p { color: var(--text-secondary); font-size: .8125rem; line-height: 1.5; }
+.sueldo-importes dd { font-size: 1.25rem; font-weight: 700; font-variant-numeric: tabular-nums; margin: .25rem 0; overflow-wrap: anywhere; }
+.sueldo-resultado { display: flex; flex-direction: column; align-items: flex-start; gap: .35rem; padding-block: 1rem; border-block: 1px solid var(--border-subtle); }
+.sueldo-oferta-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .6rem .75rem; align-items: end; }
+.sueldo-oferta-form > p { grid-column: 1 / -1; }
+.sueldo-selector, .criterios-sueldo-control { display: flex; flex-direction: column; gap: .5rem; min-width: 0; }
+.sueldo-selector label, .criterios-sueldo-control label { font-size: .875rem; font-weight: 600; }
+.sueldo-selector select, .criterios-sueldo-control select { width: 100%; min-width: 0; min-height: 44px; padding: .6rem .75rem; color: var(--text-primary); background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-sm); font-family: inherit; font-size: 1rem; }
+.criterios-sueldo-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.criterios-sueldo-form p { font-size: .8125rem; line-height: 1.5; color: var(--text-secondary); }
+.criterios-sueldo-form .sueldo-error, .sueldo-error p { color: var(--status-failed-text); }
+.criterios-clasificacion { list-style: none; padding: 0; margin: 0; }
+.criterios-clasificacion li { padding: 1rem 0; border-bottom: 1px solid var(--border-subtle); color: var(--text-primary); font-size: .875rem; font-weight: 500; line-height: 1.5; overflow-wrap: anywhere; }
+.criterios-clasificacion li:first-child { padding-top: 0; }
+.criterio-sueldo-fila { display: grid; grid-template-columns: minmax(0, 1fr) minmax(180px, 250px); gap: 1rem; align-items: center; }
+.sueldo-error { display: flex; flex-direction: column; gap: .5rem; align-items: flex-start; font-size: .8125rem; line-height: 1.5; }
+.comparison-salary { display: flex; align-items: center; justify-content: space-between; gap: .5rem; width: 100%; padding: .75rem 1rem; border: 0; border-top: 1px solid var(--border-subtle); background: transparent; color: var(--text-secondary); font: inherit; font-size: .8125rem; cursor: pointer; text-align: left; }
+.comparison-salary:hover { background: var(--bg-base); }
+.comparison-salary .sueldo-indicador { font-size: .75rem; }
+@media (max-width: 480px) {
+  .sueldo-importes, .sueldo-oferta-form, .criterio-sueldo-fila { grid-template-columns: minmax(0, 1fr); }
+  .criterio-sueldo-fila { gap: .5rem; }
+  .sueldo-oferta-form > button { width: 100%; min-height: 44px; }
+  .ranking-criteria-actions > button, .candidate-salary-button { min-height: 44px !important; }
+  .candidate-salary-button { min-width: 44px !important; }
+}
+.sueldo-simple { display: flex; flex-direction: column; gap: 1.1rem; }
+.sueldo-simple .sueldo-ayuda { font-size: .75rem; }
+.sueldo-celda { display: inline-flex; align-items: center; gap: .4rem; font-size: .8125rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+.sueldo-sin-monto { color: #CA8A04; }
+[data-theme='dark'] .sueldo-sin-monto { color: #FACC15; }
+.comentario-celda { display: flex; flex-direction: column; align-items: center; gap: .1rem; }
+.comentario-ver { border: 0; background: transparent; padding: .1rem .25rem; color: var(--text-secondary); font: inherit; font-size: .75rem; text-decoration: underline; text-underline-offset: .2em; cursor: pointer; }
+.comentario-ver:hover { color: var(--text-primary); }
+.comentario-ver { display: inline-flex; align-items: center; gap: .25rem; }
+.comentario-bandera { flex-shrink: 0; vertical-align: -2px; }
+.comentario-bandera--roja { color: var(--status-failed-text); }
+.comentario-bandera--verde { color: var(--status-verified-text); }
+.comentario-bandera-texto { display: flex; align-items: center; gap: .35rem; margin-bottom: .6rem; font-size: .8125rem; font-weight: 600; color: var(--text-secondary); }
+.comentario-banderas { display: flex; gap: .5rem; margin-bottom: .8rem; }
+.comentario-bandera-opcion { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .7rem; border-radius: var(--radius-full); border: 1px solid var(--border-default); background: var(--bg-surface); color: var(--text-secondary); font: inherit; font-size: .8125rem; cursor: pointer; }
+.comentario-bandera-opcion--roja[aria-pressed="true"] { color: var(--status-failed-text); border-color: var(--status-failed-border); background: var(--status-failed-bg); }
+.comentario-bandera-opcion--verde[aria-pressed="true"] { color: var(--status-verified-text); border-color: var(--status-verified-border); background: var(--status-verified-bg); }
