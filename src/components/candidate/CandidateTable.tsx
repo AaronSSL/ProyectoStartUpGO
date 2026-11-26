@@ -21,6 +21,7 @@ import { useAvanceMultiple } from '../../services/avanceMultiple.ts';
 import type { useEnRevision } from '../../services/enRevision.ts';
 import { Button } from '../common/Button.tsx';
 import { Badge } from '../common/Badge.tsx';
+import { PortalTag } from '../common/PortalTag.tsx';
 import {
   Search,
   Filter,
@@ -406,6 +407,7 @@ export function CandidateTable({
                         <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '0.1rem' }}>
                           {cand?.currentTitle} · <strong>{cand?.currentCompany}</strong>
                         </span>
+                        <PortalTag fuente={cand?.source} />
                         {trayectoria.aviso === activeJob?.bumeran?.avisoId && trayectoria.rows[cand?.importedProfile?.externalId || '']?.estado === 'patron_detectado' && <button
                           type="button" className="trayectoria-alert focus-ring" onClick={() => openCandidateDrawer(app, 'trayectoria')}
                           aria-label={`Revisar trayectoria de ${cand?.name}`}>Revisar trayectoria</button>}

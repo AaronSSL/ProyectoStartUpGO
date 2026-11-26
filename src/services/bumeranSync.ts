@@ -9,7 +9,7 @@ import { cargarCorreos } from './correosPostulante.ts';
 
 export const BUMERAN_PREFIX = 'BUM-';
 // Indicado por GTH: requisito obligatorio de todos los avisos publicados en Bumeran.
-export const BUMERAN_KNOCKOUT = 'Disponibilidad para trabajo presencial en Santiago de Surco';
+export const BUMERAN_KNOCKOUT = 'Disponibilidad para trabajo presencial en Lima';
 const MAX_CRITERIA = 10;
 
 export type AvisoRow = {

@@ -21,6 +21,9 @@ function apiUsuariosLocal(): Plugin {
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), apiUsuariosLocal()],
+  // Whisper y e5 corren en el navegador (transformers.js) dentro de un worker de módulo (src/services/entrevista)
+  worker: { format: 'es' },
+  optimizeDeps: { exclude: ['@huggingface/transformers'] },
   server: {
     port: 5173,
     host: true,

@@ -14,6 +14,8 @@ No usa nada de la base real de GTH. El ranking sí es real: lo calculó el mismo
 | `02c1` … `02c5_datos_trayectoria.sql` | Análisis de trayectoria laboral, un archivo por aviso (31 con alerta de rotación) |
 | `02d_datos_empresas.sql` | Diccionario de empresas Tier 1 y Tier 1.5 |
 | `03_usuario_demo.sql` | Da acceso a la cuenta de la demo |
+| `04_fuentes_portales.sql` | Portal de origen de cada postulante (Bumeran, LinkedIn o Computrabajo). Solo si cargaste los `02` antes del 25/11; los nuevos ya lo traen. |
+| `05_permisos.sql` | Permisos de la web. Los proyectos nuevos de Supabase ya no los dan solos. Ya viene incluido en `01`; córrelo si cargaste el `01` antes del 25/11. |
 
 ## 1. Crear el proyecto en Supabase
 1. En [supabase.com](https://supabase.com) → **New project**. Elige la región **South America (São Paulo)** y guarda la contraseña de la base.

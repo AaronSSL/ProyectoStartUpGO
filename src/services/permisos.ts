@@ -32,7 +32,8 @@ export const SECCIONES = [
   { id: 'base_centralizada', label: 'Base centralizada' },
   { id: 'comparador', label: 'Comparador' },
   { id: 'avance_candidatos', label: 'Avance de candidatos' },
-  { id: 'actualizacion_datos', label: 'Actualización de datos' },
+  { id: 'entrevistas', label: 'Entrevistas en video' },
+  { id: 'actualizacion_datos', label: 'Integraciones' },
 ] as const;
 export const VISTA_ADMIN = 'usuarios_permisos';
 

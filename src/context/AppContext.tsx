@@ -38,6 +38,7 @@ import { embeddingVigente, enProceso, idsTopN } from '../services/rankingEmbeddi
 export type ViewType =
   | 'convocatorias'
   | 'actualizacion_datos'
+  | 'entrevistas'
   | 'base_centralizada'
   | 'perfiles_puestos'
   | 'perfiles-puestos'

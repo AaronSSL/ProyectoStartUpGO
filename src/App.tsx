@@ -13,7 +13,8 @@ import { NuevaConvocatoriaView } from './views/NuevaConvocatoriaView.tsx';
 import { CambiarClaveView, LoginView, SinAccesoView } from './views/LoginView.tsx';
 import { UsuariosPermisosView } from './views/UsuariosPermisosView.tsx';
 import { fetchMiPerfil, Perfil, PerfilContext, puedeVerSeccion, SECCIONES, usePerfil, VISTA_ADMIN } from './services/permisos.ts';
-import { ActualizacionDatosView } from './views/ActualizacionDatosView.tsx';
+import { IntegracionesView } from './views/IntegracionesView.tsx';
+import { EntrevistasView } from './views/EntrevistasView.tsx';
 import { BaseCentralizadaView } from './views/BaseCentralizadaView.tsx';
 import { cargarEstado } from './services/persistence.ts';
 import type { AppStateData } from './types/index.ts';
@@ -42,7 +43,8 @@ function MainContent({ sync }: { sync: ReturnType<typeof useBumeranSync> }) {
   const renderView = () => {
     if (!puedeVerSeccion(perfil, currentView)) return <SinSeccion />;
     if (currentView === VISTA_ADMIN) return <UsuariosPermisosView />;
-    if (currentView === 'actualizacion_datos') return <ActualizacionDatosView sync={sync} />;
+    if (currentView === 'actualizacion_datos') return <IntegracionesView />;
+    if (currentView === 'entrevistas') return <EntrevistasView />;
     if (currentView === 'base_centralizada') return <BaseCentralizadaView />;
     if (!activeJob && currentView !== 'nueva_convocatoria' && currentView !== 'nueva-convocatoria') return <ConvocatoriasView />;
     switch (currentView) {

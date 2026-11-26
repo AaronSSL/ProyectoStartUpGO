@@ -9,6 +9,7 @@ Uso (desde la carpeta CV_UP, con un Python que tenga sentence-transformers y el 
     python demo/generar_demo.py
 Sin el modelo e5, el ranking cae a tfidf (funciona, pero los puntajes se parecen menos a los reales).
 """
+import hashlib
 import json
 import logging
 import random
@@ -23,6 +24,7 @@ sys.path.insert(0, str(RAIZ))
 
 from scraping import ranking  # noqa: E402
 from scraping.cargar_diccionario import filas_base  # noqa: E402
+from scraping.csv_bumeran import clave_postulacion  # noqa: E402
 from scraping.db import BD  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", datefmt="%H:%M:%S")
@@ -308,6 +310,13 @@ def estudios(aviso, perfil):
     return lista
 
 
+def portal_de(clave: str) -> str:
+    """Portal del que llega cada postulante (demo de Integraciones): 55 % Bumeran, 25 % LinkedIn y 20 % Computrabajo.
+    Depende solo de la clave, igual que demo/04_fuentes_portales.sql, que aplica la misma regla en SQL."""
+    n = int(hashlib.md5(clave.encode("utf-8")).hexdigest()[:7], 16) % 20
+    return "Bumeran" if n < 11 else "LinkedIn" if n < 16 else "Computrabajo"
+
+
 def persona(aviso, k, usados):
     perfil = rnd.choices(["alto", "medio", "bajo", "rotacion", "estudiante"], [0.22, 0.38, 0.24, 0.09, 0.07])[0]
     mujer = rnd.random() < 0.55
@@ -398,6 +407,8 @@ def main():
     for a in AVISOS:
         bd.guardar_detalle(a["aviso_id"], detalle(a))
         filas = [persona(a, k, usados) for k in range(a["n"])]
+        for f in filas:
+            f["Fuente"] = portal_de(clave_postulacion(f))
         nuevos, total = bd.importar_csv(a["aviso_id"], filas)
         bd.marcar(a["aviso_id"], ultimo_csv_at=ahora, recibidos_al_scrapear=total)
         log.info("%s: %d postulantes ficticios", a["titulo"], total)

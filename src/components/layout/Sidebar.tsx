@@ -21,12 +21,12 @@ import {
   ChevronRight,
   X,
   GraduationCap,
-  RefreshCw,
+  Plug,
+  Video,
   Library,
   UserCog,
 } from 'lucide-react';
 import type { useBumeranSync } from '../../services/useBumeranSync.ts';
-import { resumirRevisiones, timeAgo } from '../../services/bumeranSync.ts';
 import { puedeVerSeccion, usePerfil, VISTA_ADMIN } from '../../services/permisos.ts';
 
 interface SidebarProps {
@@ -72,18 +72,8 @@ export function Sidebar({ sync, isMobileOpen = false, onCloseMobile }: SidebarPr
   const totalTalentPool = appState.candidates.filter((c) => c.savedInTalentPool).length;
   const totalJobPostings = appState.jobPostings.length;
 
-  // Estado de los datos de Bumeran: verde = al día, rojo = error al consultar, gris = consultando o sin datos
-  const ultimaRevision = sync ? resumirRevisiones(sync.runs.rows)[0] : undefined;
-  const errorSync = sync && [sync.postings.error, sync.applicants.error, sync.ranking.error, sync.runs.error].some(Boolean);
-  const cargandoSync = sync && (sync.postings.loading || sync.runs.loading);
-  const datosItem: NavItem = {
-    id: 'actualizacion_datos', label: 'Actualización de datos', icon: <RefreshCw size={18} />,
-    status: !sync?.configured ? undefined : {
-      color: errorSync ? 'var(--status-failed-text)' : cargandoSync || !ultimaRevision ? 'var(--text-muted)' : 'var(--status-verified-text)',
-      text: errorSync ? 'error' : ultimaRevision ? timeAgo(ultimaRevision.inicio).replace('hace ', '') : '',
-      label: errorSync ? 'Error al consultar los datos' : ultimaRevision ? `Última revisión de Bumeran ${timeAgo(ultimaRevision.inicio)}` : 'Consultando',
-    },
-  };
+  // «Integraciones» ocupa la sección de la antigua «Actualización de datos» (mismo id: los permisos guardados siguen valiendo)
+  const datosItem: NavItem = { id: 'actualizacion_datos', label: 'Integraciones', icon: <Plug size={18} /> };
 
   const allNavGroups: NavGroup[] = [
     {
@@ -106,6 +96,7 @@ export function Sidebar({ sync, isMobileOpen = false, onCloseMobile }: SidebarPr
       title: 'Seguimiento',
       items: [
         { id: 'avance_candidatos', label: 'Avance de candidatos', icon: <Kanban size={18} /> },
+        { id: 'entrevistas', label: 'Entrevistas en video', icon: <Video size={18} /> },
       ],
     },
     {
@@ -136,6 +127,7 @@ export function Sidebar({ sync, isMobileOpen = false, onCloseMobile }: SidebarPr
   const stageOneLayout: { title: string; views: ViewType[] }[] = [
     { title: '', views: ['convocatorias'] },
     { title: 'Proceso de selección', views: ['mejores_candidatos', 'comparador', 'avance_candidatos'] },
+    { title: 'Proceso de selección 2', views: ['entrevistas'] },
     { title: 'Datos', views: ['base_centralizada', 'actualizacion_datos'] },
     { title: 'Administración', views: [VISTA_ADMIN] },
   ];

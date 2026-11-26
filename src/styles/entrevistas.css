@@ -1,0 +1,30 @@
+/* Proceso de selección 2: entrevistas en video */
+.entrevistas-layout { display: grid; grid-template-columns: minmax(220px, 280px) minmax(0, 1fr); gap: 1rem; align-items: start; }
+@media (max-width: 900px) { .entrevistas-layout { grid-template-columns: 1fr; } }
+.entrevistas-lista { display: grid; gap: .35rem; max-height: 420px; overflow-y: auto; }
+.entrevistas-item { display: flex; justify-content: space-between; align-items: center; gap: .5rem; width: 100%; padding: .55rem .65rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--bg-surface); color: var(--text-primary); font: inherit; font-size: .85rem; text-align: left; cursor: pointer; }
+.entrevistas-item:hover { background: var(--bg-hover); }
+.entrevistas-item[aria-pressed='true'] { border-color: var(--primary-red-border); background: var(--primary-red-subtle); }
+.entrevistas-panel { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1.25rem; }
+@media (max-width: 1100px) { .entrevistas-panel { grid-template-columns: 1fr; } }
+.entrevistas-video { width: 100%; border-radius: var(--radius-md); background: #000; aspect-ratio: 16 / 9; }
+.entrevistas-subir { display: grid; justify-items: center; gap: .5rem; padding: 2rem 1rem; border: 2px dashed var(--border-default); border-radius: var(--radius-md); text-align: center; }
+.entrevistas-archivo { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .8rem; border-radius: var(--radius-sm); font-size: .84rem; font-weight: 600; cursor: pointer; }
+.entrevistas-archivo.ui-button-primary { background: var(--primary-red); color: #fff; }
+.entrevistas-archivo.ui-button-ghost { border: 1px solid var(--border-default); color: var(--text-primary); }
+.entrevistas-link { padding: 0; border: 0; background: transparent; color: var(--primary-red); font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; }
+.entrevistas-transcripcion { display: grid; gap: .15rem; max-height: 260px; overflow-y: auto; padding-right: .25rem; }
+.entrevistas-transcripcion button { display: grid; grid-template-columns: 3rem 1fr; gap: .5rem; padding: .3rem .4rem; border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text-primary); font: inherit; font-size: .83rem; text-align: left; cursor: pointer; }
+.entrevistas-transcripcion button:hover { background: var(--bg-hover); }
+.entrevistas-transcripcion button.actual { background: var(--primary-red-subtle); }
+.entrevistas-tiempo { display: inline-flex; align-items: center; gap: .2rem; padding: 0; border: 0; background: transparent; color: var(--primary-red); font: inherit; font-size: .78rem; font-weight: 600; font-variant-numeric: tabular-nums; cursor: pointer; white-space: nowrap; }
+.entrevistas-puntaje { font-family: var(--font-heading); font-size: 2.6rem; font-weight: 800; line-height: 1; color: var(--primary-red); }
+.entrevistas-sub { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
+.entrevistas-sub > div { display: grid; gap: .1rem; padding: .6rem .7rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--bg-muted); font-size: .74rem; color: var(--text-secondary); }
+.entrevistas-sub strong { font-size: 1.3rem; color: var(--text-primary); }
+.entrevistas-barra { height: 6px; border-radius: var(--radius-full); background: var(--bg-muted); overflow: hidden; }
+.entrevistas-barra > div { height: 100%; border-radius: inherit; background: var(--primary-red); transition: width var(--motion-normal) ease; }
+.entrevistas-barra > div.indeterminada { animation: entrevistas-ir 1.2s ease-in-out infinite; }
+@keyframes entrevistas-ir { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+.reduced-motion .entrevistas-barra > div.indeterminada { animation: none; }
+@media (prefers-reduced-motion: reduce) { .entrevistas-barra > div.indeterminada { animation: none; } }

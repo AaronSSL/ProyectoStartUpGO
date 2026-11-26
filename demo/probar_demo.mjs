@@ -27,13 +27,18 @@ await db.exec(sql('03_usuario_demo.sql'));
 console.log('✓ 03_usuario_demo.sql');
 
 // Como la web: rol authenticated con la sesión de la cuenta de la demo (supabase-js respeta RLS).
-await db.exec(`grant select on all tables in schema public to authenticated; set role authenticated`);
+// Como un proyecto nuevo de Supabase: sin permisos automáticos; solo los que dan 01 (que ya incluye 05_permisos.sql)
+await db.exec(sql('05_permisos.sql'));
+console.log('✓ 05_permisos.sql');
+await db.exec(`set role authenticated`);
 await db.query(`select set_config('request.jwt.claim.sub', $1, false), set_config('request.jwt.claim.email', 'demo@cvup.pe', false)`, [USER]);
 
 const one = async (q, p = []) => (await db.query(q, p)).rows;
 const perfil = (await one(`select nivel, activo, debe_cambiar_clave from public.gth_perfiles where user_id = $1`, [USER]))[0];
 assert.deepEqual(perfil, { nivel: 'superadmin', activo: true, debe_cambiar_clave: false });
 
+for (const t of ['v_postulaciones', 'scrape_runs', 'v_base_postulantes', 'cvs', 'solicitudes', 'en_revision'])
+  await one(`select 1 from public.${t} limit 1`);   // la web lee todas estas: falla si falta el permiso
 const avisos = await one(`select aviso_id, titulo, criterios_version, jsonb_array_length(criterios) n from public.avisos order by aviso_id`);
 assert.equal(avisos.length, 5, 'cinco avisos visibles');
 let total = 0;
@@ -62,5 +67,12 @@ await db.exec('reset role');
 for (const f of DATOS) await db.exec(sql(f));
 const [{ n: marcas }] = await one(`select (select count(*) from public.en_revision) + (select count(*) from public.gth_aviso_criterios) as n`);
 assert.equal(Number(marcas), 0, 'volver a correr 02a…02d deja la demo como nueva');
+// 04 aplica en SQL la misma regla de portal que el generador: no debe cambiar ninguna fila
+const fuentes = async () => (await db.query(`select clave, aviso_id, datos_json->>'Fuente' f from public.postulaciones order by 1, 2`)).rows;
+const antes = await fuentes();
+await db.exec(sql('04_fuentes_portales.sql'));
+assert.deepEqual(await fuentes(), antes, '04_fuentes_portales.sql coincide con generar_demo.py');
+const porPortal = Object.entries(Object.groupBy(antes, (r) => r.f)).map(([k, v]) => `${k} ${v.length}`).join(', ');
+console.log(`✓ 04_fuentes_portales.sql (${porPortal})`);
 console.log('✓ Reinicio de la demo (volver a correr todos los 02)');
 console.log(`\nTodo bien: ${avisos.length} avisos y ${total} postulantes ficticios.`);
